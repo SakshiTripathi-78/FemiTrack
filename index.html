@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Period Tracker</title>
+    <link rel="stylesheet" href="tracker.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Period Tracker</h1>
+
+        <!-- Form for tracking period data -->
+        <form id="tracker-form" action="results.html" method="get">
+            <label for="period-start">Period Start Date:</label>
+            <input type="date" id="period-start" name="period-start" required><br>
+
+            <label for="blood-color">Blood Color:</label>
+            <select id="blood-color" name="blood-color">
+                <option value="Select you blood color:">Select:</option>
+                <option value="Red">Red</option>
+                <option value="Dark Red">Dark Red</option>
+                <option value="Bright Red">Bright Red</option>
+                <option value="Brown">Brown</option>
+                <option value="Pink">Pink</option>
+                <option value="Light Red">Light Red</option>
+                <option value="Clotty Blood">Clotty Blood</option>
+                <option value="Black">Black</option>
+            </select><br>
+
+            <label for="pain-level">Pain Level (1-5):</label>
+            
+            <!-- Pain level dropdown -->
+            <select id="pain-level" name="pain-level" required onchange="updatePainDescription()">
+                <option value="Select your pain level:">Select:</option>
+                <option value="1">1 - Mild Pain</option>
+                <option value="2">2 - Light Pain</option>
+                <option value="3">3 - Moderate Pain</option>
+                <option value="4">4 - Severe Pain</option>
+                <option value="5">5 - Very Severe Pain</option>
+            </select><br>
+
+            <label for="mood">Mood:</label>
+            <select id="mood" name="mood">
+                <option value="select:">Select:</option>
+                <option value="Happy">Happy</option>
+                <option value="Sad">Sad</option>
+                <option value="Angry">Angry</option>
+                <option value="Anxious">Anxious</option>
+            </select><br>
+
+            <label for="craving">Craving:</label>
+            <input type="text" id="craving" name="craving" placeholder="What are you craving?"><br>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Period Tracker - Results</title>
+    <link rel="stylesheet" href="tracker.css">
+    <style>
+         body {
+            background-image: url('bg2.jpg'); /* Replace with your image path */
+    background-size: cover; /* Ensures the image covers the entire page */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents repetition */
+            font-family: 'Times New Roman', Times, serif;
+        background-color: #f06583; /* Soft Darker Pink Background */
+        color: #333;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        height:100vh;
+        width: 68%;
+        max-width: 800px;
+        margin: 15px auto;
+        padding: 30px;
+        background: rgb(255, 182, 199, 1);
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        position: relative;
+    }
+
+    h1 {
+        color: #100c0c; /* Improved contrast color */
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+        font-weight: 600;
+        font-family: 'Times New Roman', Times, serif;
+    }
+
+    .content {
+        display: flex;
+        justify-content: space-between;
+        gap: 30px;
+        flex-wrap: wrap;
+        padding: 20px;
+    }
+
+    .box {
+        flex: 1;
+        min-width: 280px;
+        padding: 25px;
+        border-radius: 15px;
+        background-color: #fce1e4;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 1);
+        color: #333;
+        text-align: left;
+    }
+    button:hover {
+    background-color: #c0392b;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Elevated shadow on hover */
+    transform: translateY(-3px); /* Slight lift effect */
+}
+p{
+    color: #100c0c;
+}
+    .box h3 {
+        color: #e74c3c;
+        margin-bottom: 15px;
+        font-size: 1.5rem;
+    }
+
+    .highlight {
+        color: #e74c3c;
+        font-weight: bold;
+    }
+    </style>
+</head>
+<body>
+    <div class="container fade-in">
+        <h1>Period Tracker - Results</h1>
+
+        <div class="content">
+            <!-- User Data Box -->
+            <div class="box" id="user-data">
+                <h3>User Details</h3>
+                <p><strong>Last Period Start:</strong> <span class="highlight" id="periodStart"></span></p>
+                <p><strong>Estimated Next Period:</strong> <span class="highlight" id="nextPeriod"></span></p>
+                <p><strong>Blood Color:</strong> <span class="highlight" id="bloodColor"></span></p>
+                <p><strong>Pain Level:</strong> <span class="highlight" id="painLevel"></span></p>
+                <p><strong>Mood:</strong> <span class="highlight" id="mood"></span></p>
+                <p><strong>Craving:</strong> <span class="highlight" id="craving"></span></p>
+            </div>
+
+            <!-- Recommendations & Advice Box -->
+            <div class="box" id="recommendations">
+                <h3>Personalized Advice</h3>
+                <div id="recommendation" class="recommendation">
+                    <p>Analyzing your data...</p>
+                </div>
+                <div id="suggestions" class="suggestions"></div>
+            </div>
+        </div>
+
+        <button id="backButton">Back to Main Form</button>
+        <button onclick="window.location.href='reminder.html'">Set Pad Change Reminder</button>
+
+        <div class="footer">
+            <p>&copy; 2025 Period Tracker App. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const periodStart = urlParams.get('period-start') || "Not recorded";
+            const cycleLength = urlParams.get('cycle-length') ? parseInt(urlParams.get('cycle-length')) : 28;
+            const bloodColor = urlParams.get('blood-color') || "Not recorded";
+            const painLevel = urlParams.get('pain-level') ? parseInt(urlParams.get('pain-level')) : 0;
+            const mood = urlParams.get('mood') || "Not recorded";
+            const craving = urlParams.get('craving') || "No cravings recorded";
+    
+            // Calculate next predicted period
+            let nextPeriodDate = "Unknown";
+            if (periodStart !== "Not recorded") {
+                let startDate = new Date(periodStart);
+                if (isNaN(startDate.getTime())) {
+                    nextPeriodDate = "Invalid Date";
+                } else {
+                    startDate.setDate(startDate.getDate() + cycleLength);
+                    nextPeriodDate = startDate.toDateString();
+                }
+            }
+    
+            // Display user input
+            document.getElementById('periodStart').innerHTML = periodStart;
+            document.getElementById('nextPeriod').innerHTML = nextPeriodDate;
+            document.getElementById('bloodColor').innerHTML = bloodColor;
+            document.getElementById('painLevel').innerHTML = painLevel;
+            document.getElementById('mood').innerHTML = mood;
+            document.getElementById('craving').innerHTML = craving;
+    
+            // Determine pain-level recommendation
+            let recommendationText = "Your period is starting soon. Track your symptoms!";
+         
+            if (painLevel >= 4 || mood === "Sad" || mood === "Angry") {
+                recommendationText = "You're experiencing discomfort. Try a warm compress and relax.";
+            } 
+            if (painLevel >= 5) {
+                recommendationText = "Severe pain detected. Consider consulting a doctor.";
+            }
+            if (mood === "Happy") {
+                recommendationText = "You're in good spirits! Keep hydrating and eating well.";
+            }
+            // Animate recommendation update
+
+
+
+    
+            // Craving-based suggestions
+            let cravingAdvice = "";
+            if (craving.toLowerCase().includes("chocolate")) {
+                cravingAdvice = "Dark chocolate boosts serotonin and reduces cramps!";
+            } else if (craving.toLowerCase().includes("salty")) {
+                cravingAdvice = "Try eating nuts or avocado instead of processed salty foods.";
+            } else if (craving.toLowerCase().includes("sweet")) {
+                cravingAdvice = "Opt for fruits like bananas or dates for a healthier sweet fix.";
+            } else {
+                cravingAdvice = "Stay hydrated and listen to your body!";
+            }
+    
+            // Pain relief suggestions based on pain level
+            let painRelief = "";
+            let yogaExercise = "";
+            let foodSuggestions = "";
+    
+            if (painLevel === 1) {
+                painRelief = "Mild discomfort. Try light stretching or herbal tea.";
+                yogaExercise = "Gentle stretches like Child's Pose or Cat-Cow to relax your body.";
+                foodSuggestions = "Eat magnesium-rich foods like spinach, almonds, or bananas.";
+            } else if (painLevel === 2) {
+                painRelief = "Gentle yoga or walking may help ease the pain.";
+                yogaExercise = "Try the Cat-Cow and Downward Dog poses to release tension in the lower back.";
+                foodSuggestions = "Warm soups or broths with ginger to reduce bloating and cramps.";
+            } else if (painLevel === 3) {
+                painRelief = "A heating pad and magnesium-rich foods may help.";
+                yogaExercise = "Try the Seated Forward Fold and Child's Pose to relieve cramping.";
+                foodSuggestions = "Foods with anti-inflammatory properties like berries and ginger.";
+            } else if (painLevel >= 4) {
+                painRelief = "Severe cramps. Consider pain relief medicine or consulting a doctor.";
+                yogaExercise = "Try restorative yoga poses like Savasana to help calm your body.";
+                foodSuggestions = "Consider foods with omega-3s like salmon or walnuts, and stay hydrated.";
+            }
+    
+            // Mood improvement tips
+            let moodAdvice = "";
+            if (mood === "Sad") {
+                moodAdvice = "Watch your favorite movie, listen to music, or take a warm bath!";
+            } else if (mood === "Anxious") {
+                moodAdvice = "Try meditation, breathing exercises, or a short walk.";
+            } else if (mood === "Angry") {
+                moodAdvice = "Channel your energy into exercise or journaling.";
+            }
+    
+            // Animate recommendation update
+            const recommendationDiv = document.getElementById("recommendation");
+            recommendationDiv.style.opacity = "0";
+            setTimeout(() => {
+                recommendationDiv.innerHTML = `<p class="highlight">${recommendationText}</p>`;
+                recommendationDiv.style.opacity = "1";
+            }, 500);
+    
+            // Update suggestions section
+            document.getElementById("suggestions").innerHTML = `
+                <h3>Personalized Advice</h3>
+                <p><strong>Craving Tip:</strong> ${cravingAdvice}</p>
+                <p><strong>Pain Relief:</strong> ${painRelief}</p>
+                <p><strong>Suggested Yoga/Exercise:</strong> ${yogaExercise}</p>
+                <p><strong>Food Suggestions:</strong> ${foodSuggestions}</p>
+                <p><strong>Mood Boost:</strong> ${moodAdvice || "Stay hydrated and take care of yourself!"}</p>
+            `;
+        };
+    
+        // Back to Main Form Button functionality
+        document.getElementById('backButton').addEventListener('click', function() {
+            window.location.href = 'index.html'; // Ensure this points to your main form (index.html)
+        });
+    </script>
+    
+</body>
+</html>

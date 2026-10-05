@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pad Change Reminder</title>
+    <link rel="stylesheet" href="tracker.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Pad Change Reminder</h1>
+
+        <div id="pad-reminder">
+            <!-- Display the reminder text dynamically -->
+            <p id="reminder-text">Loading...</p>
+            <button onclick="startReminder()">Start Reminder</button>
+
+            <!-- Display the reminder period -->
+            <p id="reminder-period" style="display:none;"></p>
+        </div>
+
+        <button onclick="window.location.href='index.html'">Back to Main Page</button>
+    </div>
+
+    <script src="tracker.js"></script>
+</body>
+</html>
